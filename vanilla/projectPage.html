@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <link rel="stylesheet" href="projectStyles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script defer src="projectFunctionality.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <div class="left-side">
+            <div class="logo-container">
+                <img src="./statics/AnchorzUpLogo_NoTagline.svg" alt="AnchorzUp Logo" class="logo">
+            </div>
+            <h2 class="title">My Shortened URLs</h2>
+            <ul class="url-list" id="urlList"></ul>
+        </div>
+        <div class="right-side">
+            <h1 class="title">URL Shortener</h1>
+            <div class="form-group">
+                <input type="text" id="urlInput" placeholder="Paste the URL to be shortened">
+                <div class="custom-dropdown">
+                    <div class="selected-option" id="selectedOption">Add expiration date</div>
+                    <ul class="dropdown-options" id="dropdownOptions">
+                        <li data-value="1">1 minute</li>
+                        <li data-value="5">5 minutes</li>
+                        <li data-value="30">30 minutes</li>
+                        <li data-value="60">1 hour</li>
+                        <li data-value="300">5 hours</li>
+                    </ul>
+                </div>
+            </div>
+            <button id="shortenBtn">Shorten URL</button>
+            <div id="output" class="message"></div>
+        </div>
+    </div>
+</body>
+</html>
