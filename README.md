@@ -25,4 +25,5 @@ Project has the HTML (main) page, a CSS containing all the styles and a JS file 
 
 # Notes
 Originally, I thought of trying more tech stacks to finish the challenge but the time and circumstances were not on my side, hence only the vanilla folder. :(
+
 <ins>Big thanks to AnchorzUp for the challenge!</ins>
