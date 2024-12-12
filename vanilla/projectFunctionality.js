@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
     request.onupgradeneeded = function(event) {
         db = event.target.result;
         if (!db.objectStoreNames.contains("urls")) {
-            db.createObjectStore("urls", { keyPath: "id" });
+            const store = db.createObjectStore("urls", { keyPath: "id" });
+            store.createIndex("clickCount", "clickCount", { unique: false });
         }
     };
 
@@ -73,7 +74,8 @@ document.addEventListener('DOMContentLoaded', function() {
             id,
             url: shortUrl,
             originalUrl: urlInput,
-            expirationTime
+            expirationTime,
+            clickCount: 0
         };
 
         saveUrlToDB(newUrl);
@@ -171,6 +173,10 @@ document.addEventListener('DOMContentLoaded', function() {
         link.className = 'short-url';
         link.innerHTML = `<a href="${originalUrl}" target="_blank">${url}</a>`;
 
+        link.querySelector('a').addEventListener('click', function () {
+            incrementClickCount(id);
+        });
+
         const deleteBtn = document.createElement('button');
         deleteBtn.className = 'delete-btn';
         deleteBtn.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
@@ -187,6 +193,21 @@ document.addEventListener('DOMContentLoaded', function() {
         listItem.appendChild(link);
         listItem.appendChild(deleteBtn);
         urlList.appendChild(listItem);
+    }
+
+    function incrementClickCount(id) {
+        const transaction = db.transaction(["urls"], "readwrite");
+        const store = transaction.objectStore("urls");
+        const request = store.get(id);
+
+        request.onsuccess = function(event) {
+            const urlData = event.target.result;
+            if (urlData) {
+                urlData.clickCount += 1;
+                store.put(urlData);
+                updateOutputMessage(`This link has been clicked ${urlData.clickCount || 0} times.`, 'success');
+            }
+        };
     }
 
     function removeUrlFromDisplay(id) {
